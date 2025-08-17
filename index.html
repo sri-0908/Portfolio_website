@@ -5,60 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sri Lakshmi | Portfolio</title>
   <style>
-    /* Apple Style Base */
+    /* Background: Black + Blue Gradient */
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #fff;
-      color: #111;
+      background: linear-gradient(135deg, #000000, #001f3f, #000000, #003366);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: #fff;
       line-height: 1.6;
       text-align: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     header {
-      padding: 100px 20px 60px;
+      padding: 120px 20px 60px;
     }
 
     header h1 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 700;
       margin: 0;
-      animation: fadeIn 2s ease-out;
+      opacity: 0;
+      animation: fadeSlide 2s forwards, glow 2s ease-in-out infinite alternate;
+      color: #00aaff;
     }
 
     header p {
-      font-size: 1.4rem;
-      color: #555;
+      font-size: 1.5rem;
+      color: #ddd;
       margin-top: 15px;
-      animation: fadeInUp 2s ease-out;
+      opacity: 0;
+      animation: fadeSlide 2s 0.5s forwards;
     }
 
     section {
       max-width: 900px;
       margin: 60px auto;
-      padding: 0 20px;
+      padding: 20px;
       text-align: left;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 600;
       margin-bottom: 20px;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid rgba(0, 150, 255, 0.4);
       padding-bottom: 10px;
+      color: #00d4ff;
     }
 
     .experience-item, .project, .achievement, .podcast {
       margin: 30px 0;
     }
 
-    strong {
-      font-weight: 600;
-    }
-
     a {
-      color: #0071e3; /* Apple blue */
+      color: #00d4ff; /* neon cyan */
       text-decoration: none;
+      font-weight: 500;
     }
 
     a:hover {
@@ -68,20 +89,21 @@
     footer {
       margin-top: 60px;
       padding: 20px;
-      background: #f5f5f7;
+      background: rgba(0, 0, 0, 0.8);
       font-size: 0.9rem;
-      color: #555;
+      color: #bbb;
+      border-top: 1px solid rgba(0, 150, 255, 0.3);
     }
 
     /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
+    @keyframes fadeSlide {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff; }
+      to { text-shadow: 0 0 20px #0099ff, 0 0 40px #0099ff; }
     }
   </style>
 </head>
@@ -168,5 +190,22 @@
     <p>© 2025 Sri Lakshmi | Personal Portfolio</p>
   </footer>
 
+  <script>
+    // Fade-in sections on scroll
+    const sections = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(section => {
+        const boxTop = section.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          section.classList.add("visible");
+        }
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  </script>
+
 </body>
 </html>
+
